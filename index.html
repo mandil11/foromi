@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f0508">
+<title>For You,Mooodi 💖</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap');
+
+:root{
+  --primary:#ff4b72; --gold:#e6c35c; --bg:#0f0508; --text:#fff;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;width:100%;height:100%;background:var(--bg);color:var(--text);
+  font-family:'Montserrat',sans-serif;overflow:hidden;user-select:none;-webkit-user-select:none}
+.vh{height:100vh;height:100dvh}
+
+#bg{position:fixed;inset:0;z-index:0;overflow:hidden}
+.bg-layer{position:absolute;inset:0;background-size:cover;background-position:center;
+  opacity:0;transition:opacity 2s ease}
+.bg-layer.on{opacity:1}
+#shade{position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:radial-gradient(circle at center,rgba(15,5,8,.45) 0%,rgba(15,5,8,.82) 100%),
+             linear-gradient(to bottom,rgba(15,5,8,.5),transparent 30%,transparent 70%,rgba(15,5,8,.7))}
+#fx{position:fixed;inset:0;z-index:2;pointer-events:none;width:100%;height:100%}
+
+.scene{position:fixed;inset:0;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:24px 20px calc(60px + env(safe-area-inset-bottom));text-align:center;
+  opacity:0;pointer-events:none;transition:opacity 1.2s ease, transform 1.2s ease;transform:translateY(20px)}
+.scene.show{opacity:1;pointer-events:auto;transform:none}
+
+.kicker{font-family:'Montserrat';letter-spacing:.5em;font-size:clamp(.65rem,2.6vw,.85rem);color:var(--gold);text-transform:uppercase;margin-bottom:18px}
+.script{font-family:'Great Vibes',cursive;color:var(--primary);line-height:1.15;text-shadow:0 0 25px rgba(255,75,114,.55)}
+
+#start .script{font-size:clamp(2.6rem,12vw,5.5rem);margin:0 0 8px}
+#start p{font-weight:300;letter-spacing:.15em;opacity:.8;margin:0 0 36px;font-size:clamp(.8rem,3.2vw,1rem)}
+.big-heart{font-size:clamp(3rem,14vw,5rem);margin-bottom:10px}
+.pill{background:rgba(255,75,114,.12);border:1.5px solid var(--primary);color:#fff;padding:15px 36px;border-radius:50px;
+  font:600 clamp(.85rem,3.5vw,1.05rem) 'Montserrat';letter-spacing:.15em;text-transform:uppercase;cursor:pointer;
+  backdrop-filter:blur(8px);transition:.35s}
+.pill:hover,.pill:active{background:var(--primary);transform:scale(1.06)}
+
+#story .line{font-family:'Great Vibes',cursive;font-size:clamp(2rem,9vw,4rem);color:#fff;min-height:2.6em;display:flex;align-items:center;justify-content:center;
+  text-shadow:0 2px 20px rgba(0,0,0,.7);max-width:900px}
+#story .line span{opacity:0;display:inline-block;transform:translateY(14px);animation:letter .6s forwards}
+@keyframes letter{to{opacity:1;transform:none}}
+
+.countdown-wrap{margin-top:26px;display:flex;flex-direction:column;align-items:center;gap:10px;opacity:0;transition:opacity 1.4s}
+.countdown-wrap.on{opacity:1}
+.countdown-label{font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);opacity:.9}
+.countdown-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.count-box{background:rgba(255,255,255,.08);border:1px solid rgba(230,195,92,.35);border-radius:14px;padding:10px 12px;min-width:70px;backdrop-filter:blur(8px)}
+.count-box b{display:block;font:600 clamp(1.2rem,5vw,1.8rem) 'Playfair Display',serif;color:var(--gold);letter-spacing:1px}
+.count-box small{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;opacity:.75}
+
+.names{font-family:'Playfair Display',serif;font-size:clamp(1.3rem,6vw,2.4rem);letter-spacing:.18em;color:var(--gold);text-transform:uppercase;
+  text-shadow:0 0 20px rgba(230,195,92,.35);display:flex;align-items:center;gap:14px;justify-content:center;flex-wrap:wrap}
+.names i{font-style:normal;color:var(--primary)}
+#proposal .script.msg{font-size:clamp(2.6rem,12vw,5rem);margin:18px 0 18px}
+.polaroid{width:clamp(130px,38vw,190px);background:#fff;padding:8px 8px 26px;border-radius:4px;transform:rotate(-4deg);
+  box-shadow:0 18px 40px rgba(0,0,0,.6);margin-bottom:20px}
+.polaroid .ph{aspect-ratio:1;background-size:cover;background-position:center;transition:opacity .6s}
+.question{font-family:'Playfair Display',serif;font-style:italic;font-weight:600;font-size:clamp(1.7rem,8vw,3rem);margin:0 0 30px;
+  text-shadow:0 2px 20px rgba(0,0,0,.7)}
+.actions{display:flex;gap:22px;align-items:center;justify-content:center;min-height:64px}
+.btn{border:0;border-radius:50px;font:600 clamp(1rem,4vw,1.2rem) 'Montserrat';padding:16px 34px;cursor:pointer;outline:none;white-space:nowrap}
+#yes{background:linear-gradient(135deg,var(--gold),#f6e7ae);color:#4a3a00;box-shadow:0 10px 25px rgba(230,195,92,.4)}
+#no{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.35);backdrop-filter:blur(6px);
+  transition:left .45s cubic-bezier(.2,.8,.2,1),top .45s cubic-bezier(.2,.8,.2,1);z-index:60}
+#hint{margin-top:16px;font-size:.8rem;opacity:.0;transition:opacity .5s;color:var(--gold);min-height:1.2em}
+#hint.on{opacity:.95}
+
+#success .script{font-size:clamp(2.8rem,13vw,6rem);margin:0}
+#success .sub{margin-top:18px;font-size:clamp(.8rem,3.4vw,1.2rem);letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+#gallery{display:flex;gap:14px;margin-top:28px;padding:10px 20px;overflow-x:auto;max-width:100%;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+#gallery::-webkit-scrollbar{display:none}
+#gallery .polaroid{flex:0 0 auto;width:clamp(100px,28vw,150px);margin:0}
+#gallery .polaroid:nth-child(odd){transform:rotate(-5deg)}
+#gallery .polaroid:nth-child(even){transform:rotate(4deg) translateY(8px)}
+
+#brand{position:fixed;left:0;right:0;bottom:calc(14px + env(safe-area-inset-bottom));z-index:50;text-align:center;
+  font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.55);pointer-events:none}
+#brand b{color:var(--gold);font-weight:600}
+
+@media (max-height:620px){
+  .polaroid{display:none} #gallery{margin-top:14px}
+  .question{margin-bottom:16px} #proposal .script.msg{margin:8px 0}
+  .countdown-wrap{margin-top:14px}
+}
+@media (max-width:400px){
+  .btn{padding:14px 20px;font-size:.9rem} .actions{gap:12px}
+  .pill{padding:14px 22px;font-size:.8rem}
+  .count-box{min-width:56px;padding:8px 8px}
+  .count-box b{font-size:1.1rem}
+  .count-box small{font-size:.5rem}
+  .countdown-row{gap:6px}
+  #story .line{font-size:clamp(1.8rem,8vw,3rem)}
+  .names{font-size:clamp(1rem,5vw,1.6rem)}
+}
+@media (orientation:landscape) and (max-height:500px){
+  .scene{padding-top:12px;padding-bottom:44px}
+  #start .big-heart{font-size:2.4rem}
+  .countdown-wrap{margin-top:10px}
+  .count-box{padding:6px 8px;min-width:50px}
+  .count-box b{font-size:1rem}
+}
+@media (max-width:360px){
+  .countdown-row{gap:4px}
+  .count-box{min-width:48px;padding:6px 5px}
+  .count-box b{font-size:1rem}
+  .btn{padding:12px 16px;font-size:.8rem}
+}
+img,.ph{max-width:100%}
+body{touch-action:manipulation;overscroll-behavior:none}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01s!important}}
+</style>
+</head>
+<body class="vh">
+
+<div id="bg"><div class="bg-layer"></div><div class="bg-layer"></div></div>
+<div id="shade"></div>
+<canvas id="fx"></canvas>
+
+<section class="scene show" id="start">
+  <div class="big-heart">💖</div>
+  <h1 class="script" style="font-weight:400">For You, Chuuuty</h1>
+  <p>A little surprise from Oyge Malli babagen <p>
+  <button class="pill" id="startBtn">Obanna Obanna Chuuuty</button>
+</section>
+
+<section class="scene" id="story">
+  <div class="kicker">Mandil &amp; Omesha</div>
+  <div class="line" id="line"></div>
+  <div class="countdown-wrap" id="countdownWrap">
+    <div class="countdown-label">Counting down to 15 October 2026</div>
+    <div class="countdown-row">
+      <div class="count-box"><b id="cd-days">0</b><small>Days</small></div>
+      <div class="count-box"><b id="cd-hours">0</b><small>Hours</small></div>
+      <div class="count-box"><b id="cd-mins">0</b><small>Mins</small></div>
+      <div class="count-box"><b id="cd-secs">0</b><small>Secs</small></div>
+    </div>
+  </div>
+</section>
+
+<section class="scene" id="proposal">
+  <div class="polaroid"><div class="ph" id="polaPhoto"></div></div>
+  <div class="names"><span id="boy"></span><i>♥</i><span id="girl"></span></div>
+  <div class="script msg">I love you, Chuuuty</div>
+  <div class="question">Will you marry me?</div>
+  <div class="actions" id="actions">
+    <button class="btn" id="yes">Ow Chuuuty 💖</button>
+    <button class="btn" id="no">Nh 🙈</button>
+  </div>
+  <div id="hint"></div>
+</section>
+
+<section class="scene" id="success">
+  <div class="script">I knew it, Chuuuty! ❤️</div>
+  <div class="sub">Hamadatama Oya Mge Hritheeeee</div>
+  <div class="script" style="font-size:clamp(1.6rem,7vw,2.6rem);margin-top:14px;color:var(--gold);text-shadow:none" id="signoff"></div>
+  <div id="gallery"></div>
+</section>
+
+<div id="brand">Developed by <b>OMI SOLUTIONS</b></div>
+
+<script>
+const CONFIG = {
+  boy: "Mandil",
+  girl: "Omesha",
+  nickname: "Chuuuty",
+  targetDate: "2026-10-15T00:00:00",
+  photos: [
+    "5.jpg", // Meka oyage folder eke thiyena hriya nama danna
+    "1.jpg",
+    "2.jpg",
+    "3.jpg",
+    "4.jpg",
+    "IMG_4691.jpg",
+
+  ],
+  story: [
+    "Hey Chuuuty… 💕",
+    "I made something special, just for you",
+    "Every moment with you feels like magic ✨",
+    "You're my favourite person in the whole world",
+    "So… I have one little question"
+  ],
+  noHints: [
+    "Hehe, nice try Chuuuty 😜",
+    "Button eka duwanawa neda hu huuuu 🙈",
+    "Oyt oka touch krnna bh baboooo! 😂",
+    "Obanna Yes kyl manika 🥺",
+    "Chuuuty plsss 💖",
+    "Oya yes kyl obanakan eya balan innw hode 😘"
+  ]
+};
+
+const $ = id => document.getElementById(id);
+document.title = `For You, ${CONFIG.girl} 💖`;
+$('boy').textContent = CONFIG.boy;
+$('girl').textContent = CONFIG.girl;
+$('signoff').textContent = `${CONFIG.boy} ♥ ${CONFIG.girl}`;
+
+function sample(i){
+  const pal=[['#ffb347','#ff4b72','#3a0a2a'],['#ff9a9e','#a18cd1','#1a0a3a'],['#fbc2eb','#f6416c','#40102a'],
+             ['#f9d423','#ff4e50','#2a0a1a'],['#84fab0','#8fd3f4','#0a2a3a']][i%5];
+  const sx=[400,260,540,330,470][i%5];
+  const svg=`<svg xmlns='http://www.w3.org/2000/svg' width='800' height='1200' viewBox='0 0 800 1200'>
+  <defs>
+    <linearGradient id='s' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='${pal[2]}'/><stop offset='.55' stop-color='${pal[1]}'/><stop offset='1' stop-color='${pal[0]}'/></linearGradient>
+    <radialGradient id='g'><stop offset='0' stop-color='#fff' stop-opacity='.95'/><stop offset='1' stop-color='#fff' stop-opacity='0'/></radialGradient>
+  </defs>
+  <rect width='800' height='1200' fill='url(#s)'/>
+  <circle cx='${sx}' cy='760' r='230' fill='url(#g)' opacity='.55'/>
+  <circle cx='${sx}' cy='760' r='95' fill='#fff7e0'/>
+  <path d='M0 960 Q200 900 400 950 T800 930 V1200 H0Z' fill='#1a0710'/>
+  <path d='M400 520 C360 470 300 500 330 560 C350 595 400 620 400 620 C400 620 450 595 470 560 C500 500 440 470 400 520Z' fill='#ff4b72' opacity='.9'/>
+  <text x='400' y='1080' font-size='46' fill='#fff' fill-opacity='.8' text-anchor='middle' font-family='Georgia,serif' font-style='italic'>Sample photo ${i+1}</text>
+  </svg>`;
+  return 'data:image/svg+xml;utf8,'+encodeURIComponent(svg);
+}
+const PHOTOS = CONFIG.photos.length ? CONFIG.photos : [0,1,2,3,4].map(sample);
+
+const layers=[...document.querySelectorAll('.bg-layer')];
+let bgIdx=0, bgTop=0;
+function showBg(){
+  const l=layers[bgTop];
+  l.style.backgroundImage=`url("${PHOTOS[bgIdx%PHOTOS.length]}")`;
+  l.classList.remove('on'); void l.offsetWidth; l.classList.add('on');
+  layers[1-bgTop].classList.remove('on');
+  bgTop=1-bgTop; bgIdx++;
+}
+showBg(); setInterval(showBg,7000);
+
+let pIdx=0;
+function cyclePola(){ $('polaPhoto').style.backgroundImage=`url("${PHOTOS[pIdx%PHOTOS.length]}")`; pIdx++; }
+cyclePola(); setInterval(cyclePola,3500);
+
+PHOTOS.forEach(src=>{
+  const d=document.createElement('div'); d.className='polaroid';
+  d.innerHTML=`<div class="ph" style="background-image:url('${src}')"></div>`;
+  $('gallery').appendChild(d);
+});
+
+const scenes={start:$('start'),story:$('story'),proposal:$('proposal'),success:$('success')};
+function go(name){ Object.entries(scenes).forEach(([k,el])=>el.classList.toggle('show',k===name)); }
+let state='start';
+
+$('startBtn').addEventListener('click',()=>{
+  state='story'; go('story'); initParticles(); runStory();
+});
+
+function typeLine(text){
+  const el=$('line'); el.innerHTML='';
+  const s=document.createElement('span'); s.textContent=text; el.appendChild(s);
+  return 2800;
+}
+
+let countdownInterval = null;
+
+function startCountdown() {
+  if (countdownInterval) {
+    clearInterval(countdownInterval);
+    countdownInterval = null;
+  }
+  const targetTime = new Date(CONFIG.targetDate).getTime();
+
+  function updateCountdown() {
+    const now = Date.now();
+    const diff = targetTime - now;
+
+    if (isNaN(targetTime) || diff <= 0) {
+      $('cd-days').textContent = '0';
+      $('cd-hours').textContent = '00';
+      $('cd-mins').textContent = '00';
+      $('cd-secs').textContent = '00';
+      return;
+    }
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+    $('cd-days').textContent = days;
+    $('cd-hours').textContent = String(hours).padStart(2, '0');
+    $('cd-mins').textContent = String(mins).padStart(2, '0');
+    $('cd-secs').textContent = String(secs).padStart(2, '0');
+  }
+
+  updateCountdown();
+  countdownInterval = setInterval(updateCountdown, 1000);
+}
+
+async function runStory(){
+  $('countdownWrap').classList.add('on');
+  startCountdown();
+
+  for(let i=0;i<CONFIG.story.length;i++){
+    const wait = typeLine(CONFIG.story[i]);
+    await new Promise(r=>setTimeout(r,wait));
+  }
+  state='question'; go('proposal');
+}
+
+const no=$('no'); let hintN=0, evadeCount=0, moved=false;
+function evade(e){
+  if(e) e.preventDefault();
+  const r=no.getBoundingClientRect();
+  if(!moved){
+    moved=true;
+    const ph=document.createElement('div'); ph.style.cssText=`width:${r.width}px;height:${r.height}px`;
+    no.parentElement.appendChild(ph);
+    no.style.position='fixed'; no.style.left=r.left+'px'; no.style.top=r.top+'px';
+    void no.offsetWidth;
+  }
+  const w=no.offsetWidth,h=no.offsetHeight,pad=14;
+  const maxX=innerWidth-w-pad, maxY=innerHeight-h-pad-30;
+  let x,y,tries=0;
+  do{ x=pad+Math.random()*(maxX-pad); y=pad+Math.random()*(maxY-pad); tries++; }
+  while(tries<20 && Math.hypot(x-parseFloat(no.style.left),y-parseFloat(no.style.top))<140);
+  no.style.left=x+'px'; no.style.top=y+'px';
+  evadeCount++;
+  $('hint').textContent=CONFIG.noHints[hintN++%CONFIG.noHints.length]; $('hint').classList.add('on');
+}
+no.addEventListener('mouseenter',evade);
+no.addEventListener('touchstart',evade,{passive:false});
+no.addEventListener('click',evade);
+
+$('yes').addEventListener('click',()=>{
+  state='success'; no.style.display='none';
+  go('success'); burst();
+  if(navigator.vibrate) navigator.vibrate([120,60,120,60,300]);
+});
+
+const cv=$('fx'), ctx=cv.getContext('2d');
+let W,H,DPR=Math.min(devicePixelRatio||1,2),P=[];
+function resize(){W=innerWidth;H=innerHeight;cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);}
+addEventListener('resize',resize); resize();
+
+const HEARTS=['#ff4b72','#d81b47','#ff8fa3','#c9184a','#ffb3c6'];
+function heart(x,y,s,c,a){ctx.save();ctx.translate(x,y);ctx.rotate(a);ctx.scale(s,s);ctx.fillStyle=c;ctx.beginPath();
+  ctx.moveTo(0,0);ctx.bezierCurveTo(-1.5,-1.5,-3,1,0,3);ctx.bezierCurveTo(3,1,1.5,-1.5,0,0);ctx.fill();ctx.restore();}
+function petal(x,y,s,c,a){ctx.save();ctx.translate(x,y);ctx.rotate(a);ctx.scale(s,s);ctx.fillStyle=c;ctx.beginPath();
+  ctx.moveTo(0,0);ctx.quadraticCurveTo(1,-1,2,0);ctx.quadraticCurveTo(1,1,0,0);ctx.fill();ctx.restore();}
+function spark(x,y,s,al){ctx.save();ctx.translate(x,y);ctx.shadowBlur=s*4;ctx.shadowColor='#e6c35c';
+  ctx.fillStyle=`rgba(255,225,120,${al})`;ctx.beginPath();ctx.arc(0,0,s,0,6.283);ctx.fill();ctx.restore();}
+
+class Pt{
+  constructor(type,mode,x,y){this.type=type;this.init(mode,x,y);}
+  init(mode,x,y){
+    this.alive=true;this.life=1;this.mode=mode;
+    this.s=(Math.random()*5+4)*(this.type==='spark'?.35:1);
+    this.a=Math.random()*6.28;this.va=(Math.random()-.5)*.06;
+    this.c=this.type==='petal'?['#ffccd5','#ffb3c6','#ff8fa3'][Math.random()*3|0]:HEARTS[Math.random()*HEARTS.length|0];
+    if(mode==='burst'){
+      this.x=x??W/2;this.y=y??H/2;const an=Math.random()*6.28,sp=Math.random()*14+3;
+      this.vx=Math.cos(an)*sp;this.vy=Math.sin(an)*sp-3;this.g=.18;this.decay=Math.random()*.008+.004;
+    }else if(mode==='trail'){
+      this.x=x;this.y=y;this.vx=(Math.random()-.5)*1.2;this.vy=-Math.random()*1.4-.4;this.g=0;this.decay=.025;this.s*=.6;
+    }else{
+      this.x=Math.random()*W;
+      if(this.type==='petal'){this.y=-30-Math.random()*H*.3;this.vy=Math.random()*1.2+.7;this.vx=(Math.random()-.5);}
+      else{this.y=H+30+Math.random()*H*.3;this.vy=-(Math.random()*1.2+.5);this.vx=(Math.random()-.5)*.4;}
+      this.g=0;this.decay=0;
+    }
+  }
+  update(){
+    this.x+=this.vx;this.y+=this.vy;this.vy+=this.g;this.a+=this.va;
+    if(this.mode==='ambient'){
+      this.x+=Math.sin(this.y*.02)*.5;
+      if(this.y<-40||this.y>H+40) this.init('ambient');
+    }else{this.life-=this.decay;if(this.life<=0)this.alive=false;}
+  }
+  draw(){
+    ctx.globalAlpha=Math.max(0,Math.min(1,this.life));
+    if(this.type==='heart')heart(this.x,this.y,this.s,this.c,this.a);
+    else if(this.type==='petal')petal(this.x,this.y,this.s,this.c,this.a);
+    else spark(this.x,this.y,this.s,this.life);
+    ctx.globalAlpha=1;
+  }
+}
+const small=innerWidth<600, N=small?.6:1;
+function initParticles(){
+  if(P.length) return;
+  for(let i=0;i<10*N;i++)P.push(new Pt('heart','ambient'));
+  for(let i=0;i<6*N;i++)P.push(new Pt('petal','ambient'));
+  for(let i=0;i<8*N;i++)P.push(new Pt('spark','ambient'));
+  loop();
+}
+function burst(k=1){
+  const types=['heart','heart','petal','spark'];
+  for(let i=0;i<(small?60:100)*k;i++)P.push(new Pt(types[Math.random()*4|0],'burst'));
+}
+
+function loop(){
+  ctx.clearRect(0,0,W,H);
+  for(let i=P.length-1;i>=0;i--){const p=P[i];p.update();if(!p.alive){P.splice(i,1);continue;}p.draw();}
+  if(state==='success'&&Math.random()<.03){const p=new Pt(Math.random()<.7?'heart':'spark','ambient');p.y=H+30;P.push(p);}
+  requestAnimationFrame(loop);
+}
+</script>
+</body>
+</html>
